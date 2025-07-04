@@ -7,7 +7,9 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
   try {
-    const { latitude, longitude, email, name } = req.body;
+    const { email, name, location } = req.body;
+    const latitude = location?.latitude;
+    const longitude = location?.longitude;
     
     // Debug logging
     console.log('Received request body:', req.body);
@@ -31,7 +33,7 @@ router.post('/', async (req, res) => {
     // Debug logging
     console.log('Processed data:', { address, ipAddress, mapLink });
     
-    const location = new Location({
+    const locationData = new Location({
       address,
       latitude: lat,
       longitude: lng,
@@ -40,7 +42,7 @@ router.post('/', async (req, res) => {
       email,
       name,
     });
-    await location.save();
+    await locationData.save();
     
     // Debug logging before sending email
     console.log('Sending email with data:', { to: email, address, latitude: lat, longitude: lng, ipAddress, mapLink, name });
