@@ -15,6 +15,9 @@ function createTransporter() {
 }
 
 export async function sendLocationEmail({ to, address, latitude, longitude, ipAddress, mapLink, name }) {
+  // Debug logging
+  console.log('sendLocationEmail called with:', { to, address, latitude, longitude, ipAddress, mapLink, name });
+  
   const transporter = createTransporter();
 
   const mailOptions = {
@@ -40,6 +43,9 @@ export async function sendLocationEmail({ to, address, latitude, longitude, ipAd
       </div>
     `,
   };
+
+  // Debug logging
+  console.log('Mail options:', mailOptions);
 
   try {
     await transporter.sendMail(mailOptions);
